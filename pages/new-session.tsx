@@ -1,19 +1,29 @@
 import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
 
 import NewSessionForm from '../src/components/session/NewSessionForm';
+import { apiRoutes } from "../src/constants";
+import type { Category } from '../src/types';
 
-const NewSession: NextPage = () => {
+interface Props {
+  categories: Array<Category>;
+}
+
+export const getStaticProps = async () => {
+  const res = await fetch(apiRoutes.CATEGORIES);
+  const categories = await res.json();
+  return { props: { categories } };
+};
+
+const NewSession: NextPage<Props> = (props) => {
+  const { categories } = props;
+
   return (
-    <div className={styles.container}>
-      <NewSessionForm
-        categories={[]}
-        selectedCategoryIds={[]}
-        requestCategories={() => {}}
-        saveSession={() => {}}
-        setSelectedCategoryIds={() => {}}
-      />
-    </div>
+    <NewSessionForm
+      categories={categories}
+      selectedCategoryIds={categories.map(c => c.id)}
+      onSave={() => {}}
+      onSelectCategories={() => {}}
+    />
   )
 }
 

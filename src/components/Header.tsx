@@ -16,21 +16,19 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SignOutIcon from '@mui/icons-material/ExitToApp';
 
 import { useAuth } from '../hooks/useAuth';
-// import { FirebaseContext } from '../../context/FirebaseContext';
 import { routes } from '../constants';
 
 const Header = () => {
   const theme = useTheme();
-  // const firebase = useContext(FirebaseContext);
   const [anchorEl, setAnchorEl] = React.useState<null|Element>(null);
-  const user = useAuth();
+  const { user } = useAuth();
 
   const handleAvatarClick = (e: React.MouseEvent) => setAnchorEl(e.currentTarget);
 
   const handleMenuClose = () => setAnchorEl(null);
 
   const handleSignOut = () => {
-    // firebase.auth().signOut();
+    // auth().signOut();
     setAnchorEl(null);
   };
 
@@ -41,7 +39,7 @@ const Header = () => {
           <Typography
             color="inherit"
             variant="h6"
-            sx={{ flexGrow: 1 }}
+            sx={{ cursor: 'pointer', flexGrow: 1 }}
           >
             Team Health Check
           </Typography>

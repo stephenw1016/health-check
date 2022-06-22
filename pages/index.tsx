@@ -3,12 +3,6 @@ import styles from '../styles/Home.module.css'
 
 import SessionButtons from '../src/components/session/SessionButtons';
 
-const Home: NextPage = () => {
-  return (
-    <div className={styles.container}>
-      <SessionButtons />
-    </div>
-  )
-}
+const Home: NextPage = () => <SessionButtons />;
 
 export default Home;

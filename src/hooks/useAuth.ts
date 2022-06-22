@@ -1,9 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
-import { FirebaseContext } from '../context/FirebaseContext';
+// import { useContext, useEffect, useState } from 'react';
+// import { FirebaseContext } from '../context/FirebaseContext';
 
 export const useAuth = () => {
-  const user = { displayName: 'Stephen White', photoURL: '' };
-  const firebase = useContext(FirebaseContext);
+  const user = {
+    uid: '1234567890',
+    displayName: 'Stephen White',
+    photoURL: ''
+  };
+
+  // const firebase = useContext(FirebaseContext);
   // const [user, setUser] = useState(firebase.auth());
 
   // useEffect(() => {
@@ -14,6 +19,6 @@ export const useAuth = () => {
   //   return authListener;
   // }, [user]);
 
-  return user;
+  return { user };
   // return user;
 };
