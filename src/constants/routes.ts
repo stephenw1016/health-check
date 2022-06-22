@@ -1,7 +1,7 @@
 const base = '/';
 
 const routes = {
-  HOME: `${base}home`,
+  HOME: `${base}`,
   SESSION_SUMMARY: `${base}session-summary`,
   SESSION_SUMMARY_BY_ID: `${base}session-summary/:id`,
   NEW_SESSION: `${base}new-session`,

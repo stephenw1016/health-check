@@ -1,5 +1,5 @@
-import React, { SyntheticEvent, useState } from 'react';
-
+import React from 'react';
+import Link from "next/link";
 import {
   AppBar,
   Avatar,
@@ -22,10 +22,10 @@ import { routes } from '../constants';
 const Header = () => {
   const theme = useTheme();
   // const firebase = useContext(FirebaseContext);
-  const [anchorEl, setAnchorEl] = useState<null|Element>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null|Element>(null);
   const user = useAuth();
 
-  const handleAvatarClick = (e: SyntheticEvent) => setAnchorEl(e.currentTarget);
+  const handleAvatarClick = (e: React.MouseEvent) => setAnchorEl(e.currentTarget);
 
   const handleMenuClose = () => setAnchorEl(null);
 
@@ -37,7 +37,15 @@ const Header = () => {
   return (
     <AppBar position="static" color="primary">
       <Toolbar variant="dense">
-        <Typography color="inherit" variant="h6" sx={{ flexGrow: 1 }}>Team Health Check</Typography>
+        <Link href={routes.HOME} passHref>
+          <Typography
+            color="inherit"
+            variant="h6"
+            sx={{ flexGrow: 1 }}
+          >
+            Team Health Check
+          </Typography>
+        </Link>
         {user ? (
           <>
             <Typography
