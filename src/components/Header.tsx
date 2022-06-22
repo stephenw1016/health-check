@@ -15,17 +15,15 @@ import {
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SignOutIcon from '@mui/icons-material/ExitToApp';
 
-// import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 // import { FirebaseContext } from '../../context/FirebaseContext';
-// import { routes } from '../../constants';
+import { routes } from '../constants';
 
 const Header = () => {
   const theme = useTheme();
   // const firebase = useContext(FirebaseContext);
   const [anchorEl, setAnchorEl] = useState<null|Element>(null);
-  // const user = useAuth();
-  const routes = { HOME: '/', USER_PROFILE: '/', SIGN_IN: '/' };
-  const user = { displayName: 'Stephen White', photoURL: '' };
+  const user = useAuth();
 
   const handleAvatarClick = (e: SyntheticEvent) => setAnchorEl(e.currentTarget);
 
