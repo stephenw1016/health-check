@@ -8,7 +8,7 @@ interface Props {
   categories: Array<Category>;
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const res = await fetch(apiRoutes.CATEGORIES);
   const categories = await res.json();
   return { props: { categories } };

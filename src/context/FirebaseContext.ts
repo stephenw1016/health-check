@@ -18,11 +18,11 @@ class Firebase {
     // const app = initializeApp(firebaseConfig);
     // this.auth = getAuth(app);
     // this.db = getFirestore(app);
-    const app = {};
-    this.auth = () => ({
-      onAuthStateChanged: () => ({}),
-    });
-    this.db = {};
+    // const app = {};
+    // this.auth = () => ({
+    //   onAuthStateChanged: () => ({}),
+    // });
+    // this.db = {};
   }
 }
 

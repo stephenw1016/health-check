@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useState} from 'react';
+import React from 'react';
 import {
   Button,
   Dialog,
@@ -11,15 +11,15 @@ import {
 
 type Props = {
   open: boolean,
-  onClose: Function,
-  onSubmit: Function,
+  onClose: any,
+  onSubmit: any,
 };
 
 const JoinSessionDialog = (props: Props) => {
   const { open, onClose, onSubmit } = props;
-  const [joinId, setJoinId] = useState<string>('');
+  const [joinId, setJoinId] = React.useState<string>('');
 
-  const handleJoinIdChange = (e: SyntheticEvent) => setJoinId(e.target.value);
+  const handleJoinIdChange = (e: React.ChangeEvent<HTMLInputElement>) => setJoinId(e.target.value);
 
   const handleSubmit = () => onSubmit(joinId);
 
