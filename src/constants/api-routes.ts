@@ -1,7 +1,8 @@
-const base = 'http://localhost:3000/api/';
+const protocol = process.env.VERCEL_ENV === 'development' ? 'http' : 'https';
+const base = `${protocol}://${process.env.VERCEL_URL}`;
 
 const apiRoutes = {
-  CATEGORIES: `${base}categories`,
+  CATEGORIES: `${base}/api/categories`,
 };
 
 export default apiRoutes;
