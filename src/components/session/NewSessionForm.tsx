@@ -1,6 +1,5 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { v4 } from 'uuid';
 import format from 'date-fns/format';
 import {
   AppBar,
@@ -17,24 +16,25 @@ import {
 } from '@mui/material';
 
 import CategorySelect from './CategorySelect';
+import { generateId } from '../../utils';
 import { routes } from '../../constants';
 import { useAuth } from '../../hooks/useAuth';
-import type { Category } from '../../types';
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import type { Category, Session } from '../../types';
+import { setSelectedCategories } from "../../state/appSlice";
 
 interface Props {
   categories: Array<Category>;
-  selectedCategoryIds: Array<string>;
   onSave: any;
-  onSelectCategories: any;
 }
 
 const NewSessionForm = (props: Props) => {
-  const {
-    categories, onSave,
-    selectedCategoryIds, onSelectCategories,
-  } = props;
+  const { categories, onSave } = props;
   const router = useRouter();
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+  const selectedCategories = useAppSelector((state) => state.app.selectedCategories);
   const { user } = useAuth();
   const [name, setName] = React.useState<string>('New Session');
   const [organization, setOrganization] = React.useState<string>('');
@@ -46,16 +46,19 @@ const NewSessionForm = (props: Props) => {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => setDate(e.target.value);
 
-  const handleCategorySelect = (categoryIds: Array<string>) => onSelectCategories(categoryIds);
+  const handleCategorySelect = (categoryIds: Array<string>) => {
+    dispatch(setSelectedCategories(categoryIds));
+  };
 
   const handleStartSession = () => {
-    const sessionCategories = selectedCategoryIds.map((id) => {
-      const category = categories.find(c => c.id === id);
-      return { ...category, id, votes: {} };
-    });
+    const categoryMap = categories.reduce((map, category) => {
+      const { id } = category;
+      return { ...map, [id]: category };
+    }, Object.create(null));
+    const sessionCategories = selectedCategories.map((id) => ({ ...categoryMap[id] }));
 
-    const session = {
-      id: v4(),
+    const session: Session = {
+      id: generateId(),
       name,
       organization,
       date,
@@ -63,6 +66,8 @@ const NewSessionForm = (props: Props) => {
       createDate: format(Date.now(), 'yyyy-MM-dd'),
       createdBy: user.uid,
       categoryIndex: 0,
+      isComplete: false,
+      votes: {},
     };
 
     onSave(session);
@@ -128,18 +133,18 @@ const NewSessionForm = (props: Props) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControl required fullWidth margin="dense" error={!selectedCategoryIds.length}>
+            <FormControl required fullWidth margin="dense" error={!selectedCategories.length}>
               <InputLabel htmlFor="categorySelect" shrink>
                 Categories
               </InputLabel>
               <CategorySelect
                 categories={categories}
-                selectedCategoryIds={selectedCategoryIds}
+                selectedCategories={selectedCategories}
                 onChange={handleCategorySelect}
               />
               <FormHelperText>
                 {`Select the categories that your team will vote on.
-               ${selectedCategoryIds.length}/${categories.length} selected.`}
+               ${selectedCategories.length}/${categories.length} selected.`}
               </FormHelperText>
             </FormControl>
           </Grid>
@@ -148,7 +153,7 @@ const NewSessionForm = (props: Props) => {
               color="primary"
               variant="contained"
               onClick={handleStartSession}
-              disabled={!(name && date && selectedCategoryIds.length)}
+              disabled={!(name && date && selectedCategories.length)}
             >
               Start Session
             </Button>

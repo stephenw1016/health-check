@@ -15,16 +15,16 @@ import type { Category } from '../../types';
 interface Props {
   categories: Array<Category>;
   onChange: Function;
-  selectedCategoryIds: Array<string>;
+  selectedCategories: Array<string>;
 }
 
 const CategorySelect = (props: Props) => {
-  const { categories, onChange, selectedCategoryIds } = props;
+  const { categories, onChange, selectedCategories } = props;
   const theme = useTheme();
 
   const handleCategoryToggle = (id: string) => () => {
-    const currentIndex = selectedCategoryIds.indexOf(id);
-    const newSelectedCategories = [...selectedCategoryIds];
+    const currentIndex = selectedCategories.indexOf(id);
+    const newSelectedCategories = [...selectedCategories];
 
     if (currentIndex === -1) {
       newSelectedCategories.push(id);
@@ -86,7 +86,7 @@ const CategorySelect = (props: Props) => {
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={selectedCategoryIds.includes(id)}
+                  checked={selectedCategories.includes(id)}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ 'aria-labelledby': labelId }}

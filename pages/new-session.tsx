@@ -16,15 +16,7 @@ export const getServerSideProps = async () => {
 
 const NewSession: NextPage<Props> = (props) => {
   const { categories } = props;
-
-  return (
-    <NewSessionForm
-      categories={categories}
-      selectedCategoryIds={categories.map(c => c.id)}
-      onSave={() => {}}
-      onSelectCategories={() => {}}
-    />
-  )
+  return <NewSessionForm categories={categories} onSave={() => {}} />
 }
 
 export default NewSession;

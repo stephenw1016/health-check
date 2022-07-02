@@ -22,5 +22,6 @@ export type Session = {
   categories: Array<Category>,
   createDate: string,
   createdBy: string,
-  isComplete: boolean,
+  isComplete?: boolean,
+  votes?: Record<string, {}>
 };
